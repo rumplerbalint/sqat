@@ -1,45 +1,65 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import org.openqa.selenium.support.ui.*;
-
-import org.junit.*;
 
 public class MainPage extends PageBase {
-	private By footerLocator = By.xpath("//div[contains(@class,'footer-block')]");
-	private By searchBarOpenButtonLocator = By.className("search-bar-toggler");
-	private By searchBarLocator = By.name("search");
-	
+    private By loginButtonLocator = By.xpath("//a//ancestor::span[contains(text(),'Sign In')]");
+	private By signInButtonLocator = By.xpath("//a/span[contains(text(),'Sign in with IMDb')]");
+    private By profileButtonLocator = By.xpath("/html/body/div[2]/nav/div[2]/div[5]/div/label[2]/span/span");
+    private By logoutButtonLocator = By.xpath("/html/body/div[2]/nav/div[2]/div[5]/div/div/div/span/ul/a[6]");
+    private By newTrailersButtonLocator = By.xpath("//a[contains(text(),'Browse trailers')]");
+    private By userSettingsButtonLocator = By.xpath("//a[@href='/registration/accountsettings?ref_=nv_usr_pers_1']");
+    private By searchBarLocator = By.xpath("//*[@id='suggestion-search']");
+
     public MainPage(WebDriver driver)
     {
         super(driver);
-        this.driver.get("https://www.inf.elte.hu/en/");
+        this.driver.get("https://www.imdb.com/");
     }
 
-    public String getFooterText()
+    public void openLoginPage()
     {
-        WebElement footer = this.driver.findElement(footerLocator);
-		return footer.getText();
+        WebElement loginButton = waitAndReturnElement(loginButtonLocator);
+		loginButton.click();
+        WebElement signInButton = waitAndReturnElement(signInButtonLocator);
+		signInButton.click();
     }
 
-    public void openTheSearchBar()
+    public void logout()
     {
-        WebElement searchBarOpenButton = waitAndReturnElement(searchBarOpenButtonLocator);
-		searchBarOpenButton.click();
+        WebElement profileButton = waitAndReturnElement(profileButtonLocator);
+        profileButton.click();
+        WebElement logoutButton = waitAndReturnElement(logoutButtonLocator);
+        logoutButton.click();
     }
 
-    public SearchResultPage search(String keys)
+    public String getLoginInButtonText()
     {
-       	WebElement searchBar = waitAndReturnElement(searchBarLocator);
-		searchBar.sendKeys(keys);
+        WebElement loginButton = waitAndReturnElement(loginButtonLocator);
+        return loginButton.getText();
+    }
 
-        return new SearchResultPage(this.driver);
+    public String getLoggedInUsername()
+    {
+        WebElement profileButton = waitAndReturnElement(profileButtonLocator);
+		return profileButton.getText();
+    }
+
+    public void openNewTrailersPage()
+    {
+        WebElement newTrailersButton = waitAndReturnElement(newTrailersButtonLocator);
+        newTrailersButton.click();
+    }
+
+    public void openUserSettings()
+    {
+        WebElement profileButton = waitAndReturnElement(profileButtonLocator);
+        profileButton.click();
+        WebElement userSettingsButton = waitAndReturnElement(userSettingsButtonLocator);
+        userSettingsButton.click();
+    }
+
+    public String readPageTitle()
+    {
+        WebElement searchBar = waitAndReturnElement(searchBarLocator);
+        return searchBar.getAttribute("placeholder");
     }
 }

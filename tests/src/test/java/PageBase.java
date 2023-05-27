@@ -1,16 +1,8 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import java.net.URL;
-import java.net.MalformedURLException;
 
 import org.openqa.selenium.support.ui.*;
-
-import org.junit.*;
 
 public class PageBase {
 	
@@ -18,6 +10,8 @@ public class PageBase {
 	private WebDriverWait wait;
 	
     protected By bodyLocator = By.tagName("body");
+    protected By footerTextLocator = By.xpath("//p[contains(@class, 'imdb-footer__copyright footer__copyright')]");
+    protected By homeButtonLocator = By.xpath("//div/a[@id='home_img_holder']");
 
     public PageBase(WebDriver driver)
     {
@@ -30,9 +24,26 @@ public class PageBase {
         return this.driver.findElement(locator);
     }
 
+    protected List<WebElement> waitAndReturnElements(By locator) {
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return this.driver.findElements(locator);
+    }
+
     public String getBodyText()
     {
         WebElement bodyElement = waitAndReturnElement(bodyLocator);
         return bodyElement.getText();
+    }
+
+    public String getFooterCopyrightText()
+    {
+        WebElement footerText = waitAndReturnElement(footerTextLocator);
+        return footerText.getText();
+    }
+
+    public void goToHomePage()
+    {
+        WebElement homeButton = waitAndReturnElement(homeButtonLocator);
+        homeButton.click();
     }
 }
