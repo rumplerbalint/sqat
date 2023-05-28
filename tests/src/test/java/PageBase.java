@@ -10,13 +10,18 @@ public class PageBase {
 	private WebDriverWait wait;
 	
     protected By bodyLocator = By.tagName("body");
-    protected By footerTextLocator = By.xpath("//p[contains(@class, 'imdb-footer__copyright footer__copyright')]");
+    protected By footerTextLocator = By.xpath("//footer/div/p");
     protected By homeButtonLocator = By.xpath("//div/a[@id='home_img_holder']");
 
     public PageBase(WebDriver driver)
     {
         this.driver = driver;
 		this.wait = new WebDriverWait(driver, 10);
+    }
+
+    protected String readPageTitle()
+    {
+        return this.driver.getTitle();
     }
 
 	protected WebElement waitAndReturnElement(By locator) {

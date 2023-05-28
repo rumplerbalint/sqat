@@ -3,8 +3,8 @@ import org.openqa.selenium.*;
 public class MainPage extends PageBase {
     private By loginButtonLocator = By.xpath("//a//ancestor::span[contains(text(),'Sign In')]");
 	private By signInButtonLocator = By.xpath("//a/span[contains(text(),'Sign in with IMDb')]");
-    private By profileButtonLocator = By.xpath("/html/body/div[2]/nav/div[2]/div[5]/div/label[2]/span/span");
-    private By logoutButtonLocator = By.xpath("/html/body/div[2]/nav/div[2]/div[5]/div/div/div/span/ul/a[6]");
+    private By profileButtonLocator = By.xpath("//nav[@id='imdbHeader']/div[2]/div[5]/div/label[2]");
+    private By logoutButtonLocator = By.xpath("//nav[@id='imdbHeader']/div[2]/div[5]/div/div/div/span/ul/a[6]");
     private By newTrailersButtonLocator = By.xpath("//a[contains(text(),'Browse trailers')]");
     private By userSettingsButtonLocator = By.xpath("//a[@href='/registration/accountsettings?ref_=nv_usr_pers_1']");
     private By searchBarLocator = By.xpath("//*[@id='suggestion-search']");
@@ -57,7 +57,7 @@ public class MainPage extends PageBase {
         userSettingsButton.click();
     }
 
-    public String readPageTitle()
+    public String readSearchBarPlaceholder()
     {
         WebElement searchBar = waitAndReturnElement(searchBarLocator);
         return searchBar.getAttribute("placeholder");

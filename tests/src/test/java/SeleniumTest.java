@@ -12,7 +12,7 @@ import org.junit.*;
 public class SeleniumTest {
 	
 	private WebDriver driver;
-	private String email = "oz3f4t@inf.elte.hu";
+	private String email = "sqattest@freemail.hu";
 	private String username = "sqattest";
 	private String password = "SQATtest1";
 	
@@ -32,7 +32,10 @@ public class SeleniumTest {
 		AccountSettingsPage accountSettingsPage = new AccountSettingsPage(this.driver);
 
 		//Reading the page title
-		assertTrue(mainPage.readPageTitle().equals("Search IMDb"));
+		System.out.println(mainPage.readPageTitle());
+		assertTrue(mainPage.readPageTitle().equals("IMDb: Ratings, Reviews, and Where to Watch the Best Movies & TV Shows"));
+
+		assertTrue(mainPage.readSearchBarPlaceholder().equals("Search IMDb"));
 
 		//Static page test
 		mainPage.openNewTrailersPage();
@@ -55,7 +58,6 @@ public class SeleniumTest {
 
 		//Logout test
 		mainPage.logout();
-		System.out.println(mainPage.getLoginInButtonText());
 		assertTrue(mainPage.getLoginInButtonText().equals("Sign In"));
 	}
 
